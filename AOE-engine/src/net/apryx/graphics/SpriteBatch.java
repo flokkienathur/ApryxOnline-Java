@@ -160,6 +160,17 @@ public class SpriteBatch {
 		vertex(x - sprite.getxOffset() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
 	}
 	
+	public void drawRectangle(float x, float y, float width, float height){
+		texture(null);
+		vertex(x,y);
+		vertex(x + width, y);
+		vertex(x + width, y + height);
+		
+		vertex(x,y);
+		vertex(x + width, y + height);
+		vertex(x, y + height);
+	}
+	
 	public void flush(){
 		buffer.rewind();
 		

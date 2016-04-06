@@ -3,17 +3,14 @@ package net.apryx.apryxonline;
 import net.apryx.game.GameObject;
 import net.apryx.game.NetworkGameObject;
 import net.apryx.game.NetworkWorld;
-import net.apryx.logger.Log;
 import net.apryx.network.Client;
-import net.apryx.network.aoe.AOEMessage;
-import net.apryx.network.aoe.AOEUpdateMessage;
+import net.apryx.network.aoe.BMessage;
 
 public class ClientWorld extends NetworkWorld{
 	
-	protected Client<AOEMessage> client;
-	private AOEUpdateMessage reuseableUpdate = new AOEUpdateMessage();
+	protected Client<BMessage> client;
 	
-	public ClientWorld(Client<AOEMessage> client){
+	public ClientWorld(Client<BMessage> client){
 		this.client = client;
 	}
 	
@@ -24,31 +21,20 @@ public class ClientWorld extends NetworkWorld{
 			GameObject obj = gameObjects.get(i);
 			if(obj instanceof NetworkGameObject){
 				NetworkGameObject netObject = (NetworkGameObject) obj;
+				
 				//If its ours, lets send an update!
 				if(netObject.isLocal()){
-					reuseableUpdate.networkID = netObject.getNetworkID();
-					reuseableUpdate.x = netObject.x;
-					reuseableUpdate.y = netObject.y;
-					reuseableUpdate.targetX = netObject.targetX;
-					reuseableUpdate.targetY = netObject.targetY;
-					
-					client.send(reuseableUpdate);
+//					reuseableUpdate.networkID = netObject.getNetworkID();
+//					reuseableUpdate.x = netObject.x;
+//					reuseableUpdate.y = netObject.y;
+//					reuseableUpdate.targetX = netObject.targetX;
+//					reuseableUpdate.targetY = netObject.targetY;
+//					
+//					client.send(reuseableUpdate);
 				}
 			}
 		}
 	}
 
-	public void processMessage(AOEUpdateMessage message) {
-		//TODO make this safe lol
-		if(message.networkID != -1){
-			NetworkGameObject object = this.getGameObjectByNetworkId(message.networkID);
-			if(object == null){
-				Log.error("Unknown network object : " + message.networkID);
-				return;
-			}
-			object.process(message);
-			
-		}
-	}
 }
 

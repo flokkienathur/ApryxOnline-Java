@@ -104,6 +104,9 @@ public final class Window {
 		
 		glfwSetWindowTitle(windowHandle, title);
 		
+		//GLFW doesn't have a way to only grab but not hide ):
+		//glfwSetInputMode(windowHandle, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		
 		setWindowPos(100,100);
 		
 		makeCurrent();

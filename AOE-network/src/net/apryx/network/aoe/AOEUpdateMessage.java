@@ -1,5 +1,6 @@
 package net.apryx.network.aoe;
 
+@Deprecated
 public class AOEUpdateMessage extends AOEMessage{
 	
 	public float x;

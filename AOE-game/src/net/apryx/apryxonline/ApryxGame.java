@@ -13,32 +13,29 @@ import net.apryx.graphics.SpriteBatch;
 import net.apryx.logger.Log;
 import net.apryx.network.Client;
 import net.apryx.network.ClientListener;
-import net.apryx.network.aoe.AOECreateMessage;
-import net.apryx.network.aoe.AOEDestroyMessage;
-import net.apryx.network.aoe.AOELoginMessage;
-import net.apryx.network.aoe.AOEMessage;
-import net.apryx.network.aoe.AOEUpdateMessage;
-import net.apryx.network.serializer.AOESerializer;
+import net.apryx.network.aoe.BMessage;
+import net.apryx.network.aoe.BMessageWriter;
+import net.apryx.network.serializer.BSerializer;
 
 import org.lwjgl.opengl.GL11;
 
-public class ApryxGame extends Game implements ClientListener<AOEMessage>{
+public class ApryxGame extends Game implements ClientListener<BMessage>{
 	
 	private SpriteBatch batch;
 	private NetworkWorld world;
 	
 	//TODO refactor to different class probably
-	private Client<AOEMessage> client;
-	private Queue<AOEMessage> messageQueue;
+	private Client<BMessage> client;
+	private Queue<BMessage> messageQueue;
 	
 	@Override
 	public void init() {
 		batch = new SpriteBatch();
 		
 		//AARGGH LINKED LIST D: (Java has no non synchronized, not sorted list)
-		messageQueue = new LinkedList<AOEMessage>();
+		messageQueue = new LinkedList<BMessage>();
 		
-		client = new Client<AOEMessage>(new AOESerializer());
+		client = new Client<BMessage>(new BSerializer());
 		client.addClientListener(this);
 		
 		try {
@@ -82,61 +79,62 @@ public class ApryxGame extends Game implements ClientListener<AOEMessage>{
 	}
 
 	@Override
-	public void onConnect(Client<AOEMessage> client) {
+	public void onConnect(Client<BMessage> client) {
 		Log.debug("Connected!");
 		
-		AOELoginMessage message = new AOELoginMessage();
-		message.name = "JustF";
-		message.password = "SomeRandomPassword";
+		BMessageWriter writer = new BMessageWriter(BMessage.C_HANDSHAKE);
+		writer.writeShort(BMessage.VERSION);
+		writer.writeString("JustF");
+		writer.writeString("Password123");
 		
-		client.send(message);
+		client.send(writer.create());
 	}
 
 	@Override
-	public void onDisconnect(Client<AOEMessage> client) {
+	public void onDisconnect(Client<BMessage> client) {
 		Log.debug("Not connected ): !");
 	}
 
 	@Override
-	public void onMessage(Client<AOEMessage> client, AOEMessage message) {
+	public void onMessage(Client<BMessage> client, BMessage message) {
 		messageQueue.add(message);
 	}
 	
-	public void handleMessage(AOEMessage message){
+	public void handleMessage(BMessage message){
 		//NOTE, this does not save the client with it, although in this case its always the server
-		if(message instanceof AOECreateMessage){
-			//TODO create
-			Log.debug("Create : " + ((AOECreateMessage)message).networkID);
-			
-			AOECreateMessage msg = (AOECreateMessage) message;
-			
-			//Create the object
-			GameObjectPlayer player = new GameObjectPlayer(msg.x, msg.y);
-			player.setNetworkID(msg.networkID);
-			world.addGameObject(player);
-		}
-		else if(message instanceof AOEUpdateMessage){
-			//TODO update'
-			AOEUpdateMessage m = (AOEUpdateMessage) message;
-			
-			NetworkGameObject gameObject = world.getGameObjectByNetworkId(m.networkID);
-			if(gameObject == null){
-				Log.error("Uncreated gameobject with id " + m.networkID);
-				return;
-			}
-			
-			//update this GameObject
-			gameObject.process(m);
-		}
-		else if(message instanceof AOEDestroyMessage){
-			//TODO destroy
-			AOEDestroyMessage m = (AOEDestroyMessage) message;
-			
-			NetworkGameObject gameObject = world.getGameObjectByNetworkId(m.networkID);
-			world.removeGameObject(gameObject);
-			
-			Log.debug("Destroy " + m.networkID);
-		}
+//		if(message instanceof AOECreateMessage){
+//			//TODO create
+//			Log.debug("Create : " + ((AOECreateMessage)message).networkID);
+//			
+//			AOECreateMessage msg = (AOECreateMessage) message;
+//			
+//			//Create the object
+//			GameObjectPlayer player = new GameObjectPlayer(msg.x, msg.y);
+//			player.setNetworkID(msg.networkID);
+//			world.addGameObject(player);
+//		}
+//		else if(message instanceof AOEUpdateMessage){
+//			//TODO update'
+//			AOEUpdateMessage m = (AOEUpdateMessage) message;
+//			
+//			NetworkGameObject gameObject = world.getGameObjectByNetworkId(m.networkID);
+//			if(gameObject == null){
+//				Log.error("Uncreated gameobject with id " + m.networkID);
+//				return;
+//			}
+//			
+//			//update this GameObject
+//			gameObject.process(m);
+//		}
+//		else if(message instanceof AOEDestroyMessage){
+//			//TODO destroy
+//			AOEDestroyMessage m = (AOEDestroyMessage) message;
+//			
+//			NetworkGameObject gameObject = world.getGameObjectByNetworkId(m.networkID);
+//			world.removeGameObject(gameObject);
+//			
+//			Log.debug("Destroy " + m.networkID);
+//		}
 	}
 	
 	@Override

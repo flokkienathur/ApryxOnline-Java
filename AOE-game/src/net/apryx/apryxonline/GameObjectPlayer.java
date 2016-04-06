@@ -2,6 +2,7 @@ package net.apryx.apryxonline;
 
 import java.io.File;
 
+import net.apryx.game.GameObject;
 import net.apryx.game.NetworkGameObject;
 import net.apryx.graphics.SpriteBatch;
 import net.apryx.graphics.texture.Sprite;
@@ -28,6 +29,13 @@ public class GameObjectPlayer extends NetworkGameObject{
 	@Override
 	public void render(SpriteBatch batch) {
 		super.render(batch);
+		
+		batch.depth(GameObject.getDepthByPosition(y));
+		
+		if(isLocal()){
+			batch.color(1, 0, 0);
+			batch.drawRectangle(targetX - 1, targetY - 1, 2, 2);
+		}
 		batch.color(1,1,1);
 		batch.drawSprite(sprite, x, y, x > targetX ? -1 : 1, 1);
 	}

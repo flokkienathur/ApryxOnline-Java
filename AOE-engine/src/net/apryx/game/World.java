@@ -27,7 +27,7 @@ public class World {
 	}
 	
 	public void render(SpriteBatch batch){
-		batch.view.setOrthagonal(viewX, viewX + viewWidth, viewY + viewHeight, viewY, -100, 100);
+		batch.view.setOrthagonal(viewX, viewX + viewWidth, viewY + viewHeight, viewY, -1000, 1000);
 		for(int i = 0; i < gameObjects.size(); i++){
 			gameObjects.get(i).render(batch);
 		}

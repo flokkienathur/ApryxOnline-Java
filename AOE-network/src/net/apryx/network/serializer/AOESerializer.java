@@ -12,6 +12,7 @@ import net.apryx.network.aoe.AOELoginMessage;
 import net.apryx.network.aoe.AOEMessage;
 import net.apryx.network.aoe.AOEUpdateMessage;
 
+@Deprecated
 public class AOESerializer implements WebSerializer<AOEMessage>{
 	
 	public static final int 

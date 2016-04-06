@@ -51,5 +51,9 @@ public abstract class GameObject {
 	public int getLayer() {
 		return layer;
 	}
+	
+	public static float getDepthByPosition(float y){
+		return y / 100.0f;
+	}
 
 }

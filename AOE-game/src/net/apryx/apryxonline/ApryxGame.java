@@ -14,6 +14,7 @@ import net.apryx.logger.Log;
 import net.apryx.network.Client;
 import net.apryx.network.ClientListener;
 import net.apryx.network.aoe.BMessage;
+import net.apryx.network.aoe.BMessageReader;
 import net.apryx.network.aoe.BMessageWriter;
 import net.apryx.network.serializer.BSerializer;
 
@@ -101,40 +102,45 @@ public class ApryxGame extends Game implements ClientListener<BMessage>{
 	}
 	
 	public void handleMessage(BMessage message){
+		//TODO cache this
+		BMessageReader reader = new BMessageReader(message);
+		
 		//NOTE, this does not save the client with it, although in this case its always the server
-//		if(message instanceof AOECreateMessage){
-//			//TODO create
-//			Log.debug("Create : " + ((AOECreateMessage)message).networkID);
-//			
-//			AOECreateMessage msg = (AOECreateMessage) message;
-//			
-//			//Create the object
-//			GameObjectPlayer player = new GameObjectPlayer(msg.x, msg.y);
-//			player.setNetworkID(msg.networkID);
-//			world.addGameObject(player);
-//		}
-//		else if(message instanceof AOEUpdateMessage){
-//			//TODO update'
-//			AOEUpdateMessage m = (AOEUpdateMessage) message;
-//			
-//			NetworkGameObject gameObject = world.getGameObjectByNetworkId(m.networkID);
-//			if(gameObject == null){
-//				Log.error("Uncreated gameobject with id " + m.networkID);
-//				return;
-//			}
-//			
-//			//update this GameObject
-//			gameObject.process(m);
-//		}
-//		else if(message instanceof AOEDestroyMessage){
-//			//TODO destroy
-//			AOEDestroyMessage m = (AOEDestroyMessage) message;
-//			
-//			NetworkGameObject gameObject = world.getGameObjectByNetworkId(m.networkID);
-//			world.removeGameObject(gameObject);
-//			
-//			Log.debug("Destroy " + m.networkID);
-//		}
+		if(message.getType() == BMessage.S_CREATE){
+			int networkID = reader.readInt();
+			//TODO do something with this string ofc
+			reader.readString();
+			float x = reader.readFloat();
+			float y = reader.readFloat();
+			
+			GameObjectPlayer player = new GameObjectPlayer(x, y);
+			player.setNetworkID(networkID);
+			world.addGameObject(player);
+			
+			Log.debug("Created " + networkID);
+		}
+		else if(message.getType() == BMessage.S_MOVE){
+			int networkID = reader.readInt();
+			
+			NetworkGameObject gameObject = world.getGameObjectByNetworkId(networkID);
+			if(gameObject == null){
+				Log.error("Uncreated gameobject with id " + networkID);
+				return;
+			}
+			//revert back to first state
+			reader.reset();
+			
+			//update this GameObject
+			gameObject.process(reader);
+		}
+		else if(message.getType() == BMessage.S_DESTROY){
+			int networkID = reader.readInt();
+			
+			NetworkGameObject gameObject = world.getGameObjectByNetworkId(networkID);
+			world.removeGameObject(gameObject);
+			
+			Log.debug("Destroy " + networkID);
+		}
 	}
 	
 	@Override

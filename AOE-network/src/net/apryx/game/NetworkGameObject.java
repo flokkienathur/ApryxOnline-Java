@@ -1,7 +1,8 @@
 package net.apryx.game;
 
-import net.apryx.network.aoe.AOECreateMessage;
-import net.apryx.network.aoe.AOEUpdateMessage;
+import net.apryx.logger.Log;
+import net.apryx.network.aoe.BMessage;
+import net.apryx.network.aoe.BMessageReader;
 
 public abstract class NetworkGameObject extends GameObject{
 	
@@ -17,16 +18,24 @@ public abstract class NetworkGameObject extends GameObject{
 		super(x,y);
 	}
 	
-	public void initNetwork(AOECreateMessage m){
-		x = m.x;
-		y = m.y;
+	public void initNetwork(BMessageReader m){
+		m.readString();
+		x = m.readFloat();
+		y = m.readFloat();
 	}
 	
-	public void process(AOEUpdateMessage m){
-		x = m.x;
-		y = m.y;
-		targetX = m.targetX;
-		targetY = m.targetY;
+	public void process(BMessageReader m){
+		//Consume network id
+		int id = m.readInt();
+		if(id != this.networkID){
+			Log.error("Incorrect network ID : " + id);
+			return;
+		}
+		
+		x = m.readFloat();
+		y = m.readFloat();
+		targetX = m.readFloat();
+		targetY = m.readFloat();
 	}
 	
 	public boolean isLocal(){

@@ -6,7 +6,7 @@ import java.io.DataInputStream;
 public class BMessageReader {
 	
 	private BMessage message;
-	private ByteArrayInputStream out;
+	private ByteArrayInputStream in;
 	private DataInputStream stream;
 	
 	public BMessageReader(BMessage message){
@@ -53,8 +53,12 @@ public class BMessageReader {
 	
 	public void setMessage(BMessage message) {
 		this.message = message;
-		out = new ByteArrayInputStream(message.getData());
-		stream = new DataInputStream(out);
+		in = new ByteArrayInputStream(message.getData());
+		stream = new DataInputStream(in);
+	}
+	
+	public void reset(){
+		in.reset();
 	}
 	
 	public BMessage getMessage() {

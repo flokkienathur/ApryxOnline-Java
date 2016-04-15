@@ -2,15 +2,15 @@ package net.apryx.network.aoe.server;
 
 import net.apryx.game.NetworkGameObject;
 import net.apryx.network.Client;
-import net.apryx.network.aoe.AOEMessage;
+import net.apryx.network.aoe.BMessage;
 
 public class GameObjectServerPlayer extends NetworkGameObject{
 	
 	private boolean loggedIn = false;
 	private String name = "";
-	private Client<AOEMessage> client;
+	private Client<BMessage> client;
 	
-	public GameObjectServerPlayer(float x, float y, Client<AOEMessage> client) {
+	public GameObjectServerPlayer(float x, float y, Client<BMessage> client) {
 		super(x, y);
 		this.client = client;
 	}
@@ -31,7 +31,7 @@ public class GameObjectServerPlayer extends NetworkGameObject{
 		return loggedIn;
 	}
 	
-	public Client<AOEMessage> getClient() {
+	public Client<BMessage> getClient() {
 		return client;
 	}
 	
@@ -41,7 +41,7 @@ public class GameObjectServerPlayer extends NetworkGameObject{
 		return null;
 	}
 	
-	public void setClient(Client<AOEMessage> client) {
+	public void setClient(Client<BMessage> client) {
 		this.client = client;
 	}
 

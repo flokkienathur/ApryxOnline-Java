@@ -24,13 +24,15 @@ public class ClientWorld extends NetworkWorld{
 				
 				//If its ours, lets send an update!
 				if(netObject.isLocal()){
-//					reuseableUpdate.networkID = netObject.getNetworkID();
-//					reuseableUpdate.x = netObject.x;
-//					reuseableUpdate.y = netObject.y;
-//					reuseableUpdate.targetX = netObject.targetX;
-//					reuseableUpdate.targetY = netObject.targetY;
-//					
-//					client.send(reuseableUpdate);
+					
+					BMessage message = new BMessage(BMessage.C_MOVE);
+					message.set("network_id", netObject.getNetworkID());
+					message.set("x", netObject.x);
+					message.set("y", netObject.y);
+					message.set("target_x", netObject.targetX);
+					message.set("target_y", netObject.targetY);
+					
+					client.send(message);
 				}
 			}
 		}

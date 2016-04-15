@@ -14,8 +14,6 @@ import net.apryx.logger.Log;
 import net.apryx.network.Client;
 import net.apryx.network.ClientListener;
 import net.apryx.network.aoe.BMessage;
-import net.apryx.network.aoe.BMessageReader;
-import net.apryx.network.aoe.BMessageWriter;
 import net.apryx.network.serializer.BSerializer;
 
 import org.lwjgl.opengl.GL11;
@@ -83,12 +81,12 @@ public class ApryxGame extends Game implements ClientListener<BMessage>{
 	public void onConnect(Client<BMessage> client) {
 		Log.debug("Connected!");
 		
-		BMessageWriter writer = new BMessageWriter(BMessage.C_HANDSHAKE);
-		writer.writeShort(BMessage.VERSION);
-		writer.writeString("JustF");
-		writer.writeString("Password123");
+		BMessage message = new BMessage(BMessage.C_HANDSHAKE);
+		message.set("version", BMessage.VERSION);
+		message.set("username", "JustF");
+		message.set("password", "PasswordHansaplast");
 		
-		client.send(writer.create());
+		client.send(message);
 	}
 
 	@Override
@@ -102,39 +100,38 @@ public class ApryxGame extends Game implements ClientListener<BMessage>{
 	}
 	
 	public void handleMessage(BMessage message){
-		//TODO cache this
-		BMessageReader reader = new BMessageReader(message);
 		
 		//NOTE, this does not save the client with it, although in this case its always the server
 		if(message.getType() == BMessage.S_CREATE){
-			int networkID = reader.readInt();
-			//TODO do something with this string ofc
-			reader.readString();
-			float x = reader.readFloat();
-			float y = reader.readFloat();
+			int networkID = message.getInt("network_id", -3);
 			
-			GameObjectPlayer player = new GameObjectPlayer(x, y);
-			player.setNetworkID(networkID);
-			world.addGameObject(player);
+			String name = message.getString("game_object");
 			
-			Log.debug("Created " + networkID);
+			//TODO move this to another class or something
+			if(name.equals("player")){
+				GameObjectPlayer player = new GameObjectPlayer(0, 0);
+				player.setNetworkID(networkID);
+				player.initNetwork(message);
+				
+				world.addGameObject(player);
+				Log.debug("Created " + networkID);
+			}
+						
 		}
 		else if(message.getType() == BMessage.S_MOVE){
-			int networkID = reader.readInt();
+			int networkID = message.getInt("network_id", -3);
 			
 			NetworkGameObject gameObject = world.getGameObjectByNetworkId(networkID);
 			if(gameObject == null){
 				Log.error("Uncreated gameobject with id " + networkID);
 				return;
 			}
-			//revert back to first state
-			reader.reset();
 			
 			//update this GameObject
-			gameObject.process(reader);
+			gameObject.process(message);
 		}
 		else if(message.getType() == BMessage.S_DESTROY){
-			int networkID = reader.readInt();
+			int networkID = message.getInt("network_id", -3);
 			
 			NetworkGameObject gameObject = world.getGameObjectByNetworkId(networkID);
 			world.removeGameObject(gameObject);

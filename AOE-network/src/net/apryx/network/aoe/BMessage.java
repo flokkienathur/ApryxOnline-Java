@@ -1,5 +1,8 @@
 package net.apryx.network.aoe;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BMessage {
 
 	//Version number
@@ -18,23 +21,80 @@ public class BMessage {
 	public static final int S_DESTROY =		0xA022;
 	
 	//two byte integer
-	private final int type;
+	private int type;
+	
+	//The not binary data
+	private Map<String, String> data;
 	
 	//the actual binary data, max length is also two bytes
-	private final byte[] buffer;
+	private byte[] binaryData;
 	
-	public BMessage(int type, byte[] data){
+	public BMessage(int type){
 		this.type = type;
-		this.buffer = data;
+		data = new HashMap<String, String>();
+	}
+	
+	public void setBinaryData(byte[] binaryData) {
+		this.binaryData = binaryData;
+	}
+	
+	public byte[] getBinaryData() {
+		return binaryData;
+	}
+	
+	public boolean hasBinaryData(){
+		return binaryData == null || binaryData.length == 0;
+	}
+	
+	public int getBinaryDataSize(){
+		return binaryData == null ? 0 : binaryData.length;
+	}
+	
+	public Map<String, String> getData() {
+		return data;
+	}
+	
+	public String getString(String key){
+		return data.get(key);
+	}
+	
+	public int getInt(String key, int defaultValue){
+		try{
+			return Integer.parseInt(data.get(key));
+		}catch(Exception e){
+			return defaultValue;
+		}
+	}
+	
+	public float getFloat(String key, float defaultValue){
+		try{
+			return Float.parseFloat(data.get(key));
+		}catch(Exception e){
+			return defaultValue;
+		}
+	}
+	
+	public void set(String key, String value){
+		data.put(key, value);
+	}
+
+	public void set(String key, int value){
+		data.put(key, ""+value);
+	}
+	
+	public void set(String key, float value){
+		data.put(key, ""+value);
 	}
 	
 	public int getType() {
 		return type;
 	}
 	
-	public byte[] getData() {
-		return buffer;
+	public void setType(int type) {
+		this.type = type;
 	}
+	
+	
 	
 	
 }

@@ -56,6 +56,7 @@ public class GameObjectPlayer extends NetworkGameObject{
 		if(Input.isMouseButtonPressed(Mouse.RIGHT)){
 			targetX = world.getMouseX();
 			targetY = world.getMouseY();
+			setChanged();
 		}
 		
 		moveToTarget(movementSpeed);

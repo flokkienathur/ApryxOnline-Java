@@ -36,6 +36,8 @@ public abstract class NetworkGameObject extends GameObject{
 		y = m.getFloat("y", 0);
 		targetX = m.getFloat("target_x", 0);
 		targetY = m.getFloat("target_y", 0);
+		
+		setChanged();
 	}
 	
 	public boolean isLocal(){

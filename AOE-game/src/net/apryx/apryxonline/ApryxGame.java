@@ -100,9 +100,14 @@ public class ApryxGame extends Game implements ClientListener<BMessage>{
 	}
 	
 	public void handleMessage(BMessage message){
+		if(message == null)
+			Log.error("Message is null!");
 		
-		//NOTE, this does not save the client with it, although in this case its always the server
-		if(message.getType() == BMessage.S_CREATE){
+		if(message.getType() == BMessage.S_HANDSHAKE){
+			Log.debug("Received new handshake :D");
+		}
+		
+		else if(message.getType() == BMessage.S_CREATE){
 			int networkID = message.getInt("network_id", -3);
 			
 			String name = message.getString("game_object");

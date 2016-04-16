@@ -25,7 +25,7 @@ public class ServerWorld extends NetworkWorld{
 				//TODO add changed or something
 				
 				//If its NOT local, so its clients
-				if(!netObject.isLocal()){
+				if(!netObject.isLocal() && netObject.hasChanged()){
 					BMessage message = new BMessage(BMessage.S_MOVE);
 
 					message.set("network_id", netObject.getNetworkID());

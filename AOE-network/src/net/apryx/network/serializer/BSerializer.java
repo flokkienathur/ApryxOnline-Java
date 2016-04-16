@@ -3,7 +3,6 @@ package net.apryx.network.serializer;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -28,7 +27,7 @@ public class BSerializer implements WebSerializer<BMessage>{
 		
 		stream.writeChar(data.getBinaryDataSize());
 		
-		if(data.getBinaryDataSize() == 0){
+		if(data.getBinaryDataSize() != 0){
 			stream.write(data.getBinaryData());
 		}
 	}
@@ -48,10 +47,12 @@ public class BSerializer implements WebSerializer<BMessage>{
 		
 		int length = stream.readChar();
 		
-		byte[] b = new byte[length];
-		stream.readFully(b);
+		if(length > 0){
+			byte[] b = new byte[length];
+			stream.readFully(b);
 		
-		message.setBinaryData(b);
+			message.setBinaryData(b);
+		}
 		
 		return message;
 	}

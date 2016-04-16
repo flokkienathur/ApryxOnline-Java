@@ -23,7 +23,7 @@ public class ClientWorld extends NetworkWorld{
 				NetworkGameObject netObject = (NetworkGameObject) obj;
 				
 				//If its ours, lets send an update!
-				if(netObject.isLocal()){
+				if(netObject.isLocal() && netObject.hasChanged()){
 					
 					BMessage message = new BMessage(BMessage.C_MOVE);
 					message.set("network_id", netObject.getNetworkID());

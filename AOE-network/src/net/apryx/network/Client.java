@@ -90,6 +90,7 @@ public class Client<T> {
 			serializer.write(message, output);
 			output.flush();
 		}catch(Exception e){
+			e.printStackTrace();
 			disconnect("Failed to send message.");
 		}
 		return this;
@@ -106,6 +107,7 @@ public class Client<T> {
 					invokeOnMessage(t);
 				}
 			}catch(Exception e){
+				e.printStackTrace();
 				Log.error(e.getMessage());
 				break;
 			}

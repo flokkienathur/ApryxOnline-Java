@@ -75,7 +75,7 @@ public class ApryxNetwork implements ClientListener<BMessage>{
 		
 		else if(message.getType() == BMessage.S_CHANGELEVEL){
 			Log.debug("Change level!");
-			world = new NetworkWorld();
+			world = new ClientWorld(client);
 		}
 		
 		else if(message.getType() == BMessage.S_CREATE){
@@ -99,7 +99,6 @@ public class ApryxNetwork implements ClientListener<BMessage>{
 						
 		}
 		else if(message.getType() == BMessage.S_MOVE){
-			Log.debug("Got a move <3");
 			int networkID = message.getInt("network_id", -3);
 			
 			NetworkGameObject gameObject = world.getGameObjectByNetworkId(networkID);

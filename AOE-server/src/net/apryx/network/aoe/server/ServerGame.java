@@ -3,7 +3,7 @@ package net.apryx.network.aoe.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.apryx.engine.Network;
+import net.apryx.apryxonline.Network;
 import net.apryx.game.NetworkGame;
 import net.apryx.game.World;
 import net.apryx.logger.Log;
@@ -24,7 +24,6 @@ public class ServerGame extends NetworkGame implements ServerListener<BMessage>{
 	
 	private Server<BMessage> server;
 	private ArrayList<GameObjectServerPlayer> characters;
-	
 	
 	private int lastID = 1;
 	
@@ -121,24 +120,37 @@ public class ServerGame extends NetworkGame implements ServerListener<BMessage>{
 		if(message.getType() == BMessage.C_HANDSHAKE){
 			Log.debug("Login from : "+ message.getString("username"));
 			
-			//TODO check this for existance and stuff
 			character.setName(message.getString("username"));
 			character.setLoggedIn(true);
 			character.setNetworkID(lastID++);
 			
-			//TODO send back handshake, instead of only create message
+			//Add to current characters
+			characters.add(character);
 			
+			//Add the character to the world
+			worlds.get(0).addGameObject(character);
+			
+			//Return the handshake
+			BMessage handshake = new BMessage(BMessage.S_HANDSHAKE);
+			handshake.set("player_id", character.getNetworkID());
+			
+			//Give them the level change
+			BMessage levelChange = new BMessage(BMessage.S_CHANGELEVEL);
+			
+			client.send(levelChange);	
+			client.send(handshake);
+			
+			//Give them the create message :)
 			BMessage createMessage = new BMessage(BMessage.S_CREATE);
-			createMessage.set("game_object", "player"); //TODO fix magic numbers
+			createMessage.set("game_object", "player");
 			createMessage.set("network_id", character.getNetworkID());
 			createMessage.set("x", 0);
 			createMessage.set("y", 0);
-			
-			//TODO add it to the right world
-			worlds.get(0).addGameObject(character);
-			
+
+			//Broadcast to everyone
 			broadcast(createMessage, character);
 			
+			//Send all the current characters
 			for(GameObjectServerPlayer gameObject : characters){
 				//Reuse create message
 				createMessage.set("game_object", "player"); // TODO refactor this
@@ -150,7 +162,6 @@ public class ServerGame extends NetworkGame implements ServerListener<BMessage>{
 			}
 			
 			
-			characters.add(character);
 		}
 		
 		//TODO make this safe and stuff

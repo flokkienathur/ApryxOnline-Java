@@ -19,6 +19,8 @@ public class BMessage {
 	public static final int S_MOVE = 		0xA011;
 	public static final int S_CREATE = 		0xA021;
 	public static final int S_DESTROY =		0xA022;
+
+	public static final int S_CHANGELEVEL =	0xA040;
 	
 	//two byte integer
 	private int type;

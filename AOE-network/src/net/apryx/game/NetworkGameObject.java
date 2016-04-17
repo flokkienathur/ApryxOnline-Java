@@ -9,6 +9,7 @@ public abstract class NetworkGameObject extends GameObject{
 	public float targetX = 0;
 	public float targetY = 0;
 	private boolean changed = false;
+	private boolean local = false;
 	
 	public NetworkGameObject(){
 		super(0,0);
@@ -41,7 +42,11 @@ public abstract class NetworkGameObject extends GameObject{
 	}
 	
 	public boolean isLocal(){
-		return networkID <= 0;
+		return networkID <= 0 || local;
+	}
+	
+	public void setLocal(boolean l){
+		local = l;
 	}
 
 	public int getNetworkID() {

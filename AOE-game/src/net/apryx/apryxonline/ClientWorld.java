@@ -14,6 +14,7 @@ public class ClientWorld extends NetworkWorld{
 		this.client = client;
 	}
 	
+	
 	@Override
 	public void update() {
 		super.update();

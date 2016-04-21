@@ -76,6 +76,9 @@ public class ApryxNetwork implements ClientListener<BMessage>{
 		else if(message.getType() == BMessage.S_CHANGELEVEL){
 			Log.debug("Change level!");
 			world = new ClientWorld(client);
+			//TODO load the world
+			
+			
 		}
 		
 		else if(message.getType() == BMessage.S_CREATE){

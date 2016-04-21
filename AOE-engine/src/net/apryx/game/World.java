@@ -30,7 +30,11 @@ public class World {
 	
 	public void render(SpriteBatch batch){
 		batch.view.setOrthagonal(viewX, viewX + viewWidth, viewY + viewHeight, viewY, -1000, 1000);
-		map.draw(batch, 0, 0, 1, 1);
+		if(map != null){
+			//map.draw(batch, 0, 0, 1, 1);			
+			//TODO make a tilemap renderer
+		}
+		
 		for(int i = 0; i < gameObjects.size(); i++){
 			gameObjects.get(i).render(batch);
 		}

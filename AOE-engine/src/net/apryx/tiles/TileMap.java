@@ -3,10 +3,10 @@ package net.apryx.tiles;
 
 public class TileMap {
 	
-	private final int width, height;
+	protected final int width, height;
 	public static final int TILE_SIZE = 16;
 	
-	private Tile[] tiles;
+	protected Tile[] tiles;
 	
 	public TileMap(int width, int height){
 		this.width = width;

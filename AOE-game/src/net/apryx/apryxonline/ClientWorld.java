@@ -3,17 +3,27 @@ package net.apryx.apryxonline;
 import net.apryx.game.GameObject;
 import net.apryx.game.NetworkGameObject;
 import net.apryx.game.NetworkWorld;
+import net.apryx.graphics.SpriteBatch;
 import net.apryx.network.Client;
 import net.apryx.network.aoe.BMessage;
+import net.apryx.tiles.TileMapRenderer;
 
 public class ClientWorld extends NetworkWorld{
 	
 	protected Client<BMessage> client;
+	protected TileMapRenderer tileRenderer;
 	
 	public ClientWorld(Client<BMessage> client){
 		this.client = client;
+		tileRenderer = new TileMapRenderer(null);
 	}
 	
+
+	@Override
+	protected void renderSelf(SpriteBatch batch){
+		tileRenderer.setMap(map);
+		tileRenderer.draw(batch, 0, 0);
+	}
 	
 	@Override
 	public void update() {

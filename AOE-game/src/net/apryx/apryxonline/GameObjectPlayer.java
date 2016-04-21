@@ -1,13 +1,10 @@
 package net.apryx.apryxonline;
 
-import java.io.File;
-
+import net.apryx.apryxonline.tile.ApryxResources;
 import net.apryx.game.GameObject;
 import net.apryx.game.NetworkGameObject;
 import net.apryx.graphics.SpriteBatch;
 import net.apryx.graphics.texture.Sprite;
-import net.apryx.graphics.texture.Texture;
-import net.apryx.graphics.texture.TextureLoader;
 import net.apryx.input.Input;
 import net.apryx.input.Mouse;
 import net.apryx.math.Mathf;
@@ -20,8 +17,7 @@ public class GameObjectPlayer extends NetworkGameObject{
 	
 	public GameObjectPlayer(float x, float y){
 		super(x,y);
-		Texture t = TextureLoader.loadTexture(new File("texture/player.png"));
-		sprite = new Sprite(t);
+		sprite = new Sprite(ApryxResources.player);
 		sprite.center();
 		sprite.setyOffset(sprite.getHeight());
 	}

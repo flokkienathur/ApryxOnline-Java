@@ -136,9 +136,11 @@ public class ServerGame extends NetworkGame implements ServerListener<BMessage>{
 			
 			//Give them the level change
 			BMessage levelChange = new BMessage(BMessage.S_CHANGELEVEL);
+			levelChange.set("level", "grassy stuffs");
 			
-			client.send(levelChange);	
+			//Send the handshake and level change
 			client.send(handshake);
+			client.send(levelChange);	
 			
 			//Give them the create message :)
 			BMessage createMessage = new BMessage(BMessage.S_CREATE);

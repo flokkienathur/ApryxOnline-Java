@@ -2,6 +2,7 @@ package net.apryx.apryxonline;
 
 import java.io.IOException;
 
+import net.apryx.apryxonline.tile.ApryxResources;
 import net.apryx.engine.Engine;
 import net.apryx.game.Game;
 import net.apryx.graphics.SpriteBatch;
@@ -25,6 +26,8 @@ public class ApryxGame extends Game {
 	@Override
 	public void init() {
 		instance = this;
+		
+		ApryxResources.init();
 		
 		batch = new SpriteBatch();
 		
@@ -70,6 +73,9 @@ public class ApryxGame extends Game {
 	public void destroy() {
 		batch.dispose();
 		client.disconnect("Game ended");
+		
+		ApryxResources.dispose();
+		
 	}
 	@Override
 	public boolean isCloseRequested() {

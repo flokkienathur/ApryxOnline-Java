@@ -57,7 +57,7 @@ public class SpriteBatch {
 	
 	public SpriteBatch(){
 		//400 triangles
-		this(1200);
+		this(12000);
 	}
 	
 	/**

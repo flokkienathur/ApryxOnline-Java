@@ -1,21 +1,22 @@
 package net.apryx.apryxonline;
 
+import net.apryx.apryxonline.tile.ApryxTileRenderer;
 import net.apryx.game.GameObject;
 import net.apryx.game.NetworkGameObject;
 import net.apryx.game.NetworkWorld;
 import net.apryx.graphics.SpriteBatch;
 import net.apryx.network.Client;
 import net.apryx.network.aoe.BMessage;
-import net.apryx.tiles.TileMapRenderer;
+import net.apryx.tiles.TileRenderer;
 
-public class ClientWorld extends NetworkWorld{
+public class ApryxWorld extends NetworkWorld{
 	
 	protected Client<BMessage> client;
-	protected TileMapRenderer tileRenderer;
+	protected TileRenderer tileRenderer;
 	
-	public ClientWorld(Client<BMessage> client){
+	public ApryxWorld(Client<BMessage> client){
 		this.client = client;
-		tileRenderer = new TileMapRenderer(null);
+		tileRenderer = new ApryxTileRenderer(null);
 	}
 	
 

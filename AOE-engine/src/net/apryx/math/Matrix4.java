@@ -26,6 +26,14 @@ public class Matrix4 {
 		setScale(1,1,1);
 	}
 	
+	public void set(int x, int y, float value){
+		data[x + y << 2] = value;
+	}
+	
+	public void set(int index, float value){
+		data[index] = value;
+	}
+	
 	public void setTranslate(float x, float y, float z){
 		data[3] = x;
 		data[7] = y;

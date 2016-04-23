@@ -54,9 +54,12 @@ public class SpriteBatch {
 	public Matrix4 view;
 	
 	protected boolean drawing;
+	private int drawCalls = 0;
 	
 	public SpriteBatch(){
 		//400 triangles
+		
+		//TODO autoflush in this stuff :)
 		this(12000);
 	}
 	
@@ -83,6 +86,7 @@ public class SpriteBatch {
 	
 	public void begin(){
 		drawing = true;
+		drawCalls = 0;
 	}
 	
 	public void end(){
@@ -140,8 +144,11 @@ public class SpriteBatch {
 	public void drawSprite(Sprite sprite, float x, float y){
 		drawSprite(sprite, x, y, 1, 1);
 	}
-	
+
 	public void drawSprite(Sprite sprite, float x, float y, float xscale, float yscale){
+		if(left() <= 6)
+			flush();
+		
 		Texture t = sprite.getTexture();
 		texture(t);
 		
@@ -160,7 +167,33 @@ public class SpriteBatch {
 		vertex(x - sprite.getxOffset() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
 	}
 	
+
+	public void drawSpriteZ(Sprite sprite, float x, float y, float xscale, float yscale){
+		if(left() <= 6)
+			flush();
+		
+		Texture t = sprite.getTexture();
+		texture(t);
+		
+		uv(t.getTexCoordX(), t.getTexCoordY());
+		vertex(x - sprite.getxOffset() * xscale, y, - sprite.getyOffset() * yscale);
+		uv(t.getTexCoordX2(), t.getTexCoordY());
+		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale, y,   - sprite.getyOffset() * yscale);
+		uv(t.getTexCoordX2(), t.getTexCoordY2());
+		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y,   - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+
+		uv(t.getTexCoordX(), t.getTexCoordY());
+		vertex(x - sprite.getxOffset() * xscale,y,   - sprite.getyOffset() * yscale);
+		uv(t.getTexCoordX2(), t.getTexCoordY2());
+		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y,   - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+		uv(t.getTexCoordX(), t.getTexCoordY2());
+		vertex(x - sprite.getxOffset() * xscale,y,   - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+	}
+	
 	public void drawRectangle(float x, float y, float width, float height){
+		if(left() <= 6)
+			flush();
+		
 		texture(null);
 		vertex(x,y);
 		vertex(x + width, y);
@@ -172,7 +205,12 @@ public class SpriteBatch {
 	}
 	
 	public void flush(){
-		buffer.rewind();
+		if(idx < 1)
+			return;
+		
+		drawCalls++;
+		
+		buffer.position(0);
 		
 		vbo.bind();
 		
@@ -201,6 +239,14 @@ public class SpriteBatch {
 		
 		vbo.unbind();
 		idx = 0;
+	}
+	
+	public int left(){
+		return size - idx;
+	}
+	
+	public int getDrawCalls() {
+		return drawCalls;
 	}
 	
 	public void dispose(){

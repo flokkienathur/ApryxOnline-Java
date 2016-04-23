@@ -29,16 +29,17 @@ public class World {
 	}
 	
 	public void render(SpriteBatch batch){
+		batch.view.setIdentity();
 		batch.view.setOrthagonal(viewX, viewX + viewWidth, viewY + viewHeight, viewY, -1000, 1000);
 		
-		renderSelf(batch);
+		preRender(batch);
 		
 		for(int i = 0; i < gameObjects.size(); i++){
 			gameObjects.get(i).render(batch);
 		}
 	}
 	
-	protected void renderSelf(SpriteBatch batch){
+	protected void preRender(SpriteBatch batch){
 		
 	}
 	

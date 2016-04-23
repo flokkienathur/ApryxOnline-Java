@@ -18,6 +18,8 @@ public class ApryxWorld extends NetworkWorld{
 	public ApryxWorld(Client<BMessage> client){
 		this.client = client;
 		tileRenderer = new ApryxTileRenderer(null);
+		viewWidth = 640 / 2;
+		viewHeight = 360 / 2;
 	}
 	
 
@@ -37,8 +39,8 @@ public class ApryxWorld extends NetworkWorld{
 		Matrix4 n = new Matrix4(new float[]
 				{
 				1,0,0,0,
-				0,1,0,0,
-				0,1f,0,0,
+				0,1,1,0,
+				0,1,-1,0,
 				0,0,0,1
 				}
 		);

@@ -38,8 +38,8 @@ public class VBO {
 		//size * 4 because size in bytes needed
 		
 		//TODO test this!
-		GL15.nglBufferSubData(type, offset << 2, size << 2, MemoryUtil.memAddress(buffer));
-		//GL15.glBufferSubData(type, offset, buffer);
+		//GL15.nglBufferSubData(type, offset << 2, size << 2, MemoryUtil.memAddress(buffer));
+		GL15.glBufferSubData(type, offset, buffer);
 	}
 	
 	public void bufferData(FloatBuffer buffer){

@@ -12,6 +12,7 @@ public class ApryxResources {
 	
 	public static final Tile tileVoid = new VoidTile(0);
 	public static final Tile tileGrass = new DefaultTile(1);
+	public static final Tile tileStone = new DefaultTile(2);
 	
 	//TODO not player but entity sheet or something
 	public static Texture player;
@@ -24,8 +25,9 @@ public class ApryxResources {
 		tileSheet = TextureLoader.loadTexture(new File("texture/tilesheet.png"));
 		
 		tileSprites = new Sprite[]{
+			null,
 			new Sprite(new TextureRegion(tileSheet, 0,0,16,16)),
-			new Sprite(new TextureRegion(tileSheet, 0,0,16,16))
+			new Sprite(new TextureRegion(tileSheet, 16,0,16,16))
 		};
 	}
 	

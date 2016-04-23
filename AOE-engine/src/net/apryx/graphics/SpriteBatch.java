@@ -60,7 +60,7 @@ public class SpriteBatch {
 		//400 triangles
 		
 		//TODO autoflush in this stuff :)
-		this(12000);
+		this(120);
 	}
 	
 	/**
@@ -146,8 +146,9 @@ public class SpriteBatch {
 	}
 
 	public void drawSprite(Sprite sprite, float x, float y, float xscale, float yscale){
-		if(left() <= 6)
+		if(left() < 6){
 			flush();
+		}
 		
 		Texture t = sprite.getTexture();
 		texture(t);
@@ -165,33 +166,49 @@ public class SpriteBatch {
 		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
 		uv(t.getTexCoordX(), t.getTexCoordY2());
 		vertex(x - sprite.getxOffset() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+		
 	}
 	
-
-	public void drawSpriteZ(Sprite sprite, float x, float y, float xscale, float yscale){
-		if(left() <= 6)
+	public void drawSpriteZ(Sprite sprite, float x, float y, float z, float xscale, float yscale){
+		if(left() < 6)
 			flush();
 		
 		Texture t = sprite.getTexture();
 		texture(t);
 		
 		uv(t.getTexCoordX(), t.getTexCoordY());
-		vertex(x - sprite.getxOffset() * xscale, y, - sprite.getyOffset() * yscale);
+		vertex(x - sprite.getxOffset() * xscale,y, z  - sprite.getyOffset() * yscale);
 		uv(t.getTexCoordX2(), t.getTexCoordY());
-		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale, y,   - sprite.getyOffset() * yscale);
+		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y, z  - sprite.getyOffset() * yscale);
 		uv(t.getTexCoordX2(), t.getTexCoordY2());
-		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y,   - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y, z  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
 
 		uv(t.getTexCoordX(), t.getTexCoordY());
-		vertex(x - sprite.getxOffset() * xscale,y,   - sprite.getyOffset() * yscale);
+		vertex(x - sprite.getxOffset() * xscale,y, z  - sprite.getyOffset() * yscale);
 		uv(t.getTexCoordX2(), t.getTexCoordY2());
-		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y,   - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y, z  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
 		uv(t.getTexCoordX(), t.getTexCoordY2());
-		vertex(x - sprite.getxOffset() * xscale,y,   - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+		vertex(x - sprite.getxOffset() * xscale,y, z  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+
+		
+	}
+	
+	public void drawRectangleZ(float x, float y, float z, float width, float height){
+		if(left() < 6)
+			flush();
+		
+		texture(null);
+		vertex(x,y, z);
+		vertex(x + width, y, z);
+		vertex(x + width, y, z + height);
+		
+		vertex(x,y, z);
+		vertex(x + width, y, z + height);
+		vertex(x, y, z + height);
 	}
 	
 	public void drawRectangle(float x, float y, float width, float height){
-		if(left() <= 6)
+		if(left() < 6)
 			flush();
 		
 		texture(null);
@@ -238,6 +255,7 @@ public class SpriteBatch {
 		currentShaderProgram.reset();
 		
 		vbo.unbind();
+		
 		idx = 0;
 	}
 	

@@ -7,6 +7,7 @@ import net.apryx.apryxonline.tile.ApryxResources;
 import net.apryx.game.NetworkGameObject;
 import net.apryx.game.NetworkWorld;
 import net.apryx.logger.Log;
+import net.apryx.math.Mathf;
 import net.apryx.network.Client;
 import net.apryx.network.ClientListener;
 import net.apryx.network.aoe.BMessage;
@@ -84,7 +85,7 @@ public class ApryxNetwork implements ClientListener<BMessage>{
 			
 			for(int y = 0; y < 16; y ++){
 				for(int x = 0; x < 16; x++){
-					world.map.setTile(x, y, ApryxResources.tileGrass);
+					world.map.setTile(x, y, Mathf.random() > 0.5f ? ApryxResources.tileGrass : ApryxResources.tileStone);
 				}
 			}
 			

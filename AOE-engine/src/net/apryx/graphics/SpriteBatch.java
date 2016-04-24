@@ -141,11 +141,11 @@ public class SpriteBatch {
 		buffer.put(xyz).put(uv).put(rgba);
 	}
 	
-	public void drawSprite(Sprite sprite, float x, float y){
-		drawSprite(sprite, x, y, 1, 1);
+	public void drawSprite(Sprite sprite, float x, float y, float z){
+		drawSprite(sprite, x, y, z, 1, 1);
 	}
 
-	public void drawSprite(Sprite sprite, float x, float y, float xscale, float yscale){
+	public void drawSprite(Sprite sprite, float x, float y, float z, float xscale, float yscale){
 		if(left() < 6){
 			flush();
 		}
@@ -155,45 +155,37 @@ public class SpriteBatch {
 		Texture t = sprite.getTexture();
 		texture(t);
 		
-		uv(t.getTexCoordX(), t.getTexCoordY());
-		vertex(x - sprite.getxOffset() * xscale,y  - sprite.getyOffset() * yscale);
-		uv(t.getTexCoordX2(), t.getTexCoordY());
-		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y  - sprite.getyOffset() * yscale);
-		uv(t.getTexCoordX2(), t.getTexCoordY2());
-		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+		if(!sprite.isStraightUp()){
+			uv(t.getTexCoordX(), t.getTexCoordY());
+			vertex(x - sprite.getxOffset() * xscale,y  - sprite.getyOffset() * yscale, z);
+			uv(t.getTexCoordX2(), t.getTexCoordY());
+			vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y  - sprite.getyOffset() * yscale, z);
+			uv(t.getTexCoordX2(), t.getTexCoordY2());
+			vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale, z);
 
-		uv(t.getTexCoordX(), t.getTexCoordY());
-		vertex(x - sprite.getxOffset() * xscale,y  - sprite.getyOffset() * yscale);
-		uv(t.getTexCoordX2(), t.getTexCoordY2());
-		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
-		uv(t.getTexCoordX(), t.getTexCoordY2());
-		vertex(x - sprite.getxOffset() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
-		
-	}
-	
-	public void drawSpriteZ(Sprite sprite, float x, float y, float z, float xscale, float yscale){
-		//This is very weird :')
-		//TODO needs to be fused with drawSprite
-		if(left() < 6)
-			flush();
-		
-		Texture t = sprite.getTexture();
-		texture(t);
-		
-		uv(t.getTexCoordX(), t.getTexCoordY());
-		vertex(x - sprite.getxOffset() * xscale,y, z  - sprite.getyOffset() * yscale);
-		uv(t.getTexCoordX2(), t.getTexCoordY());
-		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y, z  - sprite.getyOffset() * yscale);
-		uv(t.getTexCoordX2(), t.getTexCoordY2());
-		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y, z  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+			uv(t.getTexCoordX(), t.getTexCoordY());
+			vertex(x - sprite.getxOffset() * xscale,y  - sprite.getyOffset() * yscale, z);
+			uv(t.getTexCoordX2(), t.getTexCoordY2());
+			vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale, z);
+			uv(t.getTexCoordX(), t.getTexCoordY2());
+			vertex(x - sprite.getxOffset() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale, z);
+		}else{
+			uv(t.getTexCoordX(), t.getTexCoordY());
+			vertex(x - sprite.getxOffset() * xscale,y, z  - sprite.getyOffset() * yscale);
+			uv(t.getTexCoordX2(), t.getTexCoordY());
+			vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y, z  - sprite.getyOffset() * yscale);
+			uv(t.getTexCoordX2(), t.getTexCoordY2());
+			vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y, z  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
 
-		uv(t.getTexCoordX(), t.getTexCoordY());
-		vertex(x - sprite.getxOffset() * xscale,y, z  - sprite.getyOffset() * yscale);
-		uv(t.getTexCoordX2(), t.getTexCoordY2());
-		vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y, z  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
-		uv(t.getTexCoordX(), t.getTexCoordY2());
-		vertex(x - sprite.getxOffset() * xscale,y, z  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
-
+			uv(t.getTexCoordX(), t.getTexCoordY());
+			vertex(x - sprite.getxOffset() * xscale,y, z  - sprite.getyOffset() * yscale);
+			uv(t.getTexCoordX2(), t.getTexCoordY2());
+			vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y, z  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+			uv(t.getTexCoordX(), t.getTexCoordY2());
+			vertex(x - sprite.getxOffset() * xscale,y, z  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+		}
+		
+		
 		
 	}
 	

@@ -5,7 +5,6 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import org.lwjgl.opengl.GL15;
-import org.lwjgl.system.MemoryUtil;
 
 public class VBO {
 	

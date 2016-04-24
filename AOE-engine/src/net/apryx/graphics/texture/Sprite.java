@@ -41,8 +41,9 @@ public class Sprite {
 		return straightUp;
 	}
 	
-	public void setStraightUp(boolean straightUp) {
+	public Sprite setStraightUp(boolean straightUp) {
 		this.straightUp = straightUp;
+		return this;
 	}
 
 	public float getHeight() {

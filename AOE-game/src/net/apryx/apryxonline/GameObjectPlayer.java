@@ -18,7 +18,7 @@ public class GameObjectPlayer extends NetworkGameObject{
 		super(x,y);
 		sprite = new Sprite(ApryxResources.player);
 		sprite.center();
-		sprite.setyOffset(sprite.getHeight() - 5);
+		sprite.setyOffset(sprite.getHeight());
 		sprite.setStraightUp(true);
 	}
 	
@@ -31,8 +31,9 @@ public class GameObjectPlayer extends NetworkGameObject{
 			batch.depth(0);
 			batch.drawRectangleZ(targetX, targetY, -1, 2, 2);
 		}
+		
 		batch.color(1,1,1);
-		batch.drawSpriteZ(sprite, x, y, 0, x > targetX ? -1 : 1, 1);
+		batch.drawSprite(sprite, x, y, 0, x > targetX ? -1 : 1, 1);
 	}
 	
 	@Override

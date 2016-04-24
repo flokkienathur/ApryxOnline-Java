@@ -26,8 +26,8 @@ public class ApryxResources {
 		
 		tileSprites = new Sprite[]{
 			null,
-			new Sprite(new TextureRegion(tileSheet, 0,0,16,16)),
-			new Sprite(new TextureRegion(tileSheet, 16,0,16,16))
+			new Sprite(new TextureRegion(tileSheet, 0,0,32,32)),
+			new Sprite(new TextureRegion(tileSheet, 32,0,32,32))
 		};
 	}
 	

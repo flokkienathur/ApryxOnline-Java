@@ -4,6 +4,7 @@ public class Sprite {
 	
 	private float width, height, xOffset, yOffset;
 	private Texture texture;
+	private boolean straightUp = false;
 	
 	public Sprite(Texture texture){
 		this(texture, texture.getWidth(), texture.getHeight());
@@ -34,6 +35,14 @@ public class Sprite {
 	public Sprite setWidth(float width) {
 		this.width = width;
 		return this;
+	}
+	
+	public boolean isStraightUp() {
+		return straightUp;
+	}
+	
+	public void setStraightUp(boolean straightUp) {
+		this.straightUp = straightUp;
 	}
 
 	public float getHeight() {

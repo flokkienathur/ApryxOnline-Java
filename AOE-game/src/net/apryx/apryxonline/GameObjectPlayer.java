@@ -18,7 +18,8 @@ public class GameObjectPlayer extends NetworkGameObject{
 		super(x,y);
 		sprite = new Sprite(ApryxResources.player);
 		sprite.center();
-		sprite.setyOffset(sprite.getHeight());
+		sprite.setyOffset(sprite.getHeight() - 5);
+		sprite.setStraightUp(true);
 	}
 	
 	@Override

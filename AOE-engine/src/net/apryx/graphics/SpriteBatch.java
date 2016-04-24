@@ -150,6 +150,8 @@ public class SpriteBatch {
 			flush();
 		}
 		
+		//TODO straight up sprites, and not this stuff and stuff idk really
+		
 		Texture t = sprite.getTexture();
 		texture(t);
 		
@@ -170,6 +172,8 @@ public class SpriteBatch {
 	}
 	
 	public void drawSpriteZ(Sprite sprite, float x, float y, float z, float xscale, float yscale){
+		//This is very weird :')
+		//TODO needs to be fused with drawSprite
 		if(left() < 6)
 			flush();
 		

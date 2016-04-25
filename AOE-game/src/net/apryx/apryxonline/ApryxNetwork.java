@@ -84,7 +84,7 @@ public class ApryxNetwork implements ClientListener<BMessage>{
 			
 			for(int y = 0; y < 16; y ++){
 				for(int x = 0; x < 16; x++){
-					world.map.setTile(x, y, ApryxResources.tileGrass);
+					world.map.setTile(x, y, Math.random() > 0.5 ? ApryxResources.tileGrass : ApryxResources.tileStone);
 				}
 			}
 			

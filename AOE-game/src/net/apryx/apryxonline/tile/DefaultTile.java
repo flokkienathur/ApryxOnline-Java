@@ -1,12 +1,11 @@
 package net.apryx.apryxonline.tile;
 
-import net.apryx.tiles.Tile;
-
-public class DefaultTile extends Tile{
+public class DefaultTile extends ApryxTile{
 	
 	protected int id;
 	
 	public DefaultTile(int id){
+		ApryxTile.tiles[id] = this;
 		this.id = id;
 	}
 	

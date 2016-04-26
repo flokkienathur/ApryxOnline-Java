@@ -3,7 +3,7 @@ package net.apryx.apryxonline;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import net.apryx.apryxonline.tile.ApryxResources;
+import net.apryx.apryxonline.tile.ApryxTile;
 import net.apryx.game.NetworkGameObject;
 import net.apryx.game.NetworkWorld;
 import net.apryx.logger.Log;
@@ -78,14 +78,13 @@ public class ApryxNetwork implements ClientListener<BMessage>{
 		else if(message.getType() == BMessage.S_CHANGELEVEL){
 			Log.debug("Change level!");
 			world = new ApryxWorld(client);
-			//TODO load the world
 			
-			world.map = new TileMap(16, 16);
+			String worldName = message.getString("world_name");
 			
-			for(int y = 0; y < 16; y ++){
-				for(int x = 0; x < 16; x++){
-					world.map.setTile(x, y, Math.random() > 0.5 ? ApryxResources.tileGrass : ApryxResources.tileStone);
-				}
+			world.map = TileMapLoader.load("worlds/"+worldName+".map");
+			
+			if(world.map == null){
+				Log.error("Can't find world : " + worldName);
 			}
 			
 		}

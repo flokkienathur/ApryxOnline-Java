@@ -6,13 +6,8 @@ import net.apryx.graphics.texture.Sprite;
 import net.apryx.graphics.texture.Texture;
 import net.apryx.graphics.texture.TextureLoader;
 import net.apryx.graphics.texture.TextureRegion;
-import net.apryx.tiles.Tile;
 
 public class ApryxResources {
-	
-	public static final Tile tileVoid = new VoidTile(0);
-	public static final Tile tileGrass = new DefaultTile(1);
-	public static final Tile tileStone = new DefaultTile(2);
 	
 	//TODO not player but entity sheet or something
 	public static Texture player;

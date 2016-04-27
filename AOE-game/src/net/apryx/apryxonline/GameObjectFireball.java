@@ -2,9 +2,11 @@ package net.apryx.apryxonline;
 
 import net.apryx.game.NetworkGameObject;
 import net.apryx.graphics.SpriteBatch;
+import net.apryx.time.Time;
 
 public class GameObjectFireball extends NetworkGameObject {
 	
+	float timer = 0;
 	
 	public GameObjectFireball(float x, float y, float targetX, float targetY) {
 		super(x, y);
@@ -13,9 +15,13 @@ public class GameObjectFireball extends NetworkGameObject {
 	}
 	
 	public void update(){
-		if(moveToTarget(128)){
-			this.world.removeGameObject(this);
+		timer += Time.deltaTime;
+		if(timer > 0.5f){
+			if(moveToTarget(128)){
+				this.world.removeGameObject(this);
+			}
 		}
+		
 	}
 
 	public void render(SpriteBatch batch) {

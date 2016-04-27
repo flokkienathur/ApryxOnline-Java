@@ -3,14 +3,12 @@ package net.apryx.apryxonline;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import net.apryx.apryxonline.tile.ApryxTile;
 import net.apryx.game.NetworkGameObject;
 import net.apryx.game.NetworkWorld;
 import net.apryx.logger.Log;
 import net.apryx.network.Client;
 import net.apryx.network.ClientListener;
 import net.apryx.network.aoe.BMessage;
-import net.apryx.tiles.TileMap;
 
 public class ApryxNetwork implements ClientListener<BMessage>{
 	

@@ -5,7 +5,6 @@ import net.apryx.game.GameObject;
 import net.apryx.game.NetworkGameObject;
 import net.apryx.game.NetworkWorld;
 import net.apryx.graphics.SpriteBatch;
-import net.apryx.logger.Log;
 import net.apryx.math.Matrix4;
 import net.apryx.network.Client;
 import net.apryx.network.aoe.BMessage;

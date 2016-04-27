@@ -1,7 +1,9 @@
 package net.apryx.game;
 
 import net.apryx.logger.Log;
+import net.apryx.math.Mathf;
 import net.apryx.network.aoe.BMessage;
+import net.apryx.time.Time;
 
 public abstract class NetworkGameObject extends GameObject{
 	
@@ -68,5 +70,22 @@ public abstract class NetworkGameObject extends GameObject{
 	
 	public void setNetworkID(int networkID) {
 		this.networkID = networkID;
+	}
+
+	public boolean moveToTarget(float speed){
+		float xDir = targetX - x;
+		float yDir = targetY - y;
+		
+		float l = Mathf.sqrt(xDir * xDir + yDir * yDir);
+		if(l < 1f)
+			return true;
+		
+		xDir /= l;
+		yDir /= l;
+
+		x += xDir * speed * Time.deltaTime;
+		y += yDir * speed * Time.deltaTime;
+		
+		return false;
 	}
 }

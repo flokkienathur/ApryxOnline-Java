@@ -2,6 +2,7 @@ package net.apryx.network.aoe.server;
 
 import net.apryx.game.GameObject;
 import net.apryx.game.NetworkWorld;
+import net.apryx.logger.Log;
 import net.apryx.network.Server;
 import net.apryx.network.aoe.BMessage;
 
@@ -33,6 +34,8 @@ public class ServerWorld extends NetworkWorld{
 					message.set("y", netObject.y);
 					message.set("target_x", netObject.targetX);
 					message.set("target_y", netObject.targetY);
+					
+					netObject.setChanged(false);
 					
 					server.broadcast(message, netObject.getClient());
 				}

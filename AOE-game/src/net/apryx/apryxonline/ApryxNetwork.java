@@ -121,6 +121,18 @@ public class ApryxNetwork implements ClientListener<BMessage>{
 			//update this GameObject
 			gameObject.process(message);
 		}
+		else if(message.getType() == BMessage.S_CAST){
+			int networkID = message.getInt("network_id", -3);
+			
+			NetworkGameObject gameObject = world.getGameObjectByNetworkId(networkID);
+			if(gameObject == null){
+				Log.error("Uncreated gameobject with id " + networkID);
+				return;
+			}
+			
+			//update this GameObject
+			gameObject.process(message);
+		}
 		else if(message.getType() == BMessage.S_DESTROY){
 			int networkID = message.getInt("network_id", -3);
 			

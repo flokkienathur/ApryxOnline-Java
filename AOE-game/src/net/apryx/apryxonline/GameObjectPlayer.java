@@ -7,7 +7,9 @@ import net.apryx.graphics.texture.Sprite;
 import net.apryx.input.Input;
 import net.apryx.input.Keys;
 import net.apryx.input.Mouse;
+import net.apryx.logger.Log;
 import net.apryx.math.Mathf;
+import net.apryx.network.aoe.BMessage;
 import net.apryx.time.Time;
 
 public class GameObjectPlayer extends NetworkGameObject{
@@ -56,6 +58,15 @@ public class GameObjectPlayer extends NetworkGameObject{
 		
 	}
 	
+	@Override
+	public void process(BMessage m) {
+		super.process(m);
+		
+		if(m.getType() == BMessage.S_CAST){
+			this.world.addGameObject(new GameObjectFireball(m.getFloat("x", 0), m.getFloat("y", 0)));
+		}
+	}
+	
 	public void updateLocal(){
 		if(!isTryCasting){
 			if(Input.isMouseButtonPressed(Mouse.RIGHT)){
@@ -74,6 +85,15 @@ public class GameObjectPlayer extends NetworkGameObject{
 			if(Input.isMouseButtonPressed(Mouse.LEFT)){
 				isTryCasting = false;
 				//TODO cast the actual spell :)
+				
+				BMessage message = new BMessage(BMessage.C_CAST);
+				message.set("spell", "fireball");
+				message.set("x", world.getMouseX());
+				message.set("y", world.getMouseY());
+				
+				Log.debug("Sending!");
+				
+				ApryxGame.instance.network.getClient().send(message);
 			}
 		}
 		

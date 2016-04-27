@@ -177,6 +177,16 @@ public class ServerGame extends NetworkGame implements ServerListener<BMessage>{
 			if(world != null)
 				world.processMessage(character,  message);
 		}
+		
+		else if(message.getType() == BMessage.C_CAST){
+			BMessage forward = new BMessage(BMessage.S_CAST);
+			forward.set("network_id", character.getNetworkID());
+			forward.set("spell", message.getString("spell"));
+			forward.set("x", message.getString("x"));
+			forward.set("y", message.getString("y"));
+			
+			broadcast(forward);
+		}
 	
 	}
 	

@@ -33,12 +33,14 @@ public abstract class NetworkGameObject extends GameObject{
 			return;
 		}
 		
-		x = m.getFloat("x", 0);
-		y = m.getFloat("y", 0);
-		targetX = m.getFloat("target_x", 0);
-		targetY = m.getFloat("target_y", 0);
-		
-		setChanged();
+		if(m.getType() == BMessage.S_MOVE || m.getType() == BMessage.C_MOVE){
+			x = m.getFloat("x", 0);
+			y = m.getFloat("y", 0);
+			targetX = m.getFloat("target_x", 0);
+			targetY = m.getFloat("target_y", 0);
+			
+			setChanged();
+		}
 	}
 	
 	public boolean isLocal(){
@@ -52,9 +54,12 @@ public abstract class NetworkGameObject extends GameObject{
 	public int getNetworkID() {
 		return networkID;
 	}
-	
+
 	public void setChanged() {
 		this.changed = true;
+	}
+	public void setChanged(boolean changed) {
+		this.changed = false;
 	}
 	
 	public boolean hasChanged() {

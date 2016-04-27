@@ -1,5 +1,8 @@
 package net.apryx.apryxonline;
 
+import net.apryx.apryxonline.spells.ApryxSpells;
+import net.apryx.apryxonline.spells.Spell;
+import net.apryx.apryxonline.spells.SpellKeyframe;
 import net.apryx.apryxonline.tile.ApryxResources;
 import net.apryx.game.NetworkGameObject;
 import net.apryx.graphics.SpriteBatch;
@@ -7,7 +10,9 @@ import net.apryx.graphics.texture.Sprite;
 import net.apryx.input.Input;
 import net.apryx.input.Keys;
 import net.apryx.input.Mouse;
+import net.apryx.logger.Log;
 import net.apryx.network.aoe.BMessage;
+import net.apryx.time.Time;
 
 public class GameObjectPlayer extends NetworkGameObject{
 	
@@ -15,6 +20,9 @@ public class GameObjectPlayer extends NetworkGameObject{
 	private Sprite sprite;
 	
 	private boolean isTryCasting = false;
+	
+	private Spell currentSpell = null;
+	private float spellTime = 0;
 	
 	public GameObjectPlayer(float x, float y){
 		super(x,y);
@@ -39,8 +47,19 @@ public class GameObjectPlayer extends NetworkGameObject{
 			}
 		}
 		
+		float drawXOffset = 0;
+		float drawYOffset = 0;
+		float drawZOffset = 0;
+		
+		if(currentSpell != null){
+			SpellKeyframe frame = currentSpell.getKeyframe(spellTime);
+			drawXOffset = frame.getxOffset();
+			drawYOffset = frame.getyOffset();
+			drawZOffset = frame.getzOffset();
+		}
+		
 		batch.color(1,1,1);
-		batch.drawSprite(sprite, x, y, 0, x > targetX ? -1 : 1, 1);
+		batch.drawSprite(sprite, x + drawXOffset, y + drawYOffset, drawZOffset, x > targetX ? -1 : 1, 1);
 	}
 	
 	@Override
@@ -53,6 +72,15 @@ public class GameObjectPlayer extends NetworkGameObject{
 			updateNetwork();
 		}
 		
+		if(currentSpell != null){
+			spellTime += Time.deltaTime;
+			if(spellTime > currentSpell.getDuration()){
+				currentSpell = null;
+				setChanged();
+			}
+		}
+		
+		
 	}
 	
 	@Override
@@ -61,6 +89,8 @@ public class GameObjectPlayer extends NetworkGameObject{
 		
 		if(m.getType() == BMessage.S_CAST){
 			this.world.addGameObject(new GameObjectFireball(x,y, m.getFloat("x", 0), m.getFloat("y", 0)));
+			this.currentSpell = ApryxSpells.fireball;
+			spellTime = 0;
 		}
 	}
 	
@@ -97,5 +127,17 @@ public class GameObjectPlayer extends NetworkGameObject{
 	
 	public void updateNetwork(){
 		moveToTarget(movementSpeed);
+	}
+	
+	@Override
+	public boolean moveToTarget(float speed) {
+		if(currentSpell != null){
+			SpellKeyframe frame = currentSpell.getKeyframe(spellTime);
+			if(frame.isUnmoveable()){
+				return true;
+			}
+		}
+		return super.moveToTarget(speed);			
+		
 	}
 }

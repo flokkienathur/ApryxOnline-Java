@@ -5,7 +5,8 @@ public class SpellKeyframe {
 	private float x,y,z;
 	private float xOffset, yOffset, zOffset;
 	private float time;
-	private boolean unmoveable = true;
+	private boolean unmoveable = false;
+	private boolean cast = false;
 	
 	public SpellKeyframe(float time){
 		this.time = time;
@@ -32,6 +33,15 @@ public class SpellKeyframe {
 	
 	public boolean isUnmoveable() {
 		return unmoveable;
+	}
+	
+	public SpellKeyframe setCast(boolean cast) {
+		this.cast = cast;
+		return this;
+	}
+	
+	public boolean isCast() {
+		return cast;
 	}
 	
 	public float getX() {

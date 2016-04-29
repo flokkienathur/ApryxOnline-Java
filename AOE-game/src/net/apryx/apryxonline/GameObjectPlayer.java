@@ -22,6 +22,8 @@ public class GameObjectPlayer extends NetworkGameObject{
 	private boolean isTryCasting = false;
 	
 	private Spell currentSpell = null;
+	private float spellX = 0;
+	private float spellY = 0;
 	private float spellTime = 0;
 	
 	public GameObjectPlayer(float x, float y){
@@ -75,6 +77,7 @@ public class GameObjectPlayer extends NetworkGameObject{
 		if(currentSpell != null){
 			spellTime += Time.deltaTime;
 			if(spellTime > currentSpell.getDuration()){
+				currentSpell.cast(this, spellX, spellY);
 				currentSpell = null;
 				setChanged();
 			}
@@ -88,8 +91,9 @@ public class GameObjectPlayer extends NetworkGameObject{
 		super.process(m);
 		
 		if(m.getType() == BMessage.S_CAST){
-			this.world.addGameObject(new GameObjectFireball(x,y, m.getFloat("x", 0), m.getFloat("y", 0)));
 			this.currentSpell = ApryxSpells.fireball;
+			spellX = m.getFloat("x", 0);
+			spellY = m.getFloat("y", 0);
 			spellTime = 0;
 		}
 	}

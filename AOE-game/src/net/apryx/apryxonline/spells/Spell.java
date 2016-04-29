@@ -3,6 +3,7 @@ package net.apryx.apryxonline.spells;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.apryx.game.GameObject;
 import net.apryx.logger.Log;
 
 public class Spell {
@@ -20,9 +21,15 @@ public class Spell {
 	public float getDuration() {
 		return duration;
 	}
+	
 	public Spell setDuration(float duration) {
 		this.duration = duration;
 		return this;
+	}
+	
+	
+	public void cast(GameObject caster, float targetX, float targetY){
+		
 	}
 	
 	public SpellKeyframe getKeyframe(float time){

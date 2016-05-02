@@ -2,7 +2,7 @@ package net.apryx.graphics.texture;
 
 public class Sprite {
 	
-	private float width, height, xOffset, yOffset;
+	private float width, height, xCenter, yCenter, xOffset, yOffset;
 	private Texture texture;
 	private boolean straightUp = false;
 	
@@ -17,14 +17,14 @@ public class Sprite {
 	public Sprite(Texture texture, float width, float height, float xOffset, float yOffset){
 		this.width = width;
 		this.height = height;
-		this.xOffset = xOffset;
-		this.yOffset = yOffset;
+		this.xCenter = xOffset;
+		this.yCenter = yOffset;
 		this.setTexture(texture);
 	}
 	
 	public Sprite center(){
-		xOffset = getWidth() / 2;
-		yOffset = getHeight() / 2;
+		xCenter = getWidth() / 2;
+		yCenter = getHeight() / 2;
 		return this;
 	}
 
@@ -55,24 +55,53 @@ public class Sprite {
 		return this;
 	}
 
-	public float getxOffset() {
-		return xOffset;
+	public float getXCenter() {
+		return xCenter;
 	}
 
-	public Sprite setxOffset(float xOffset) {
-		this.xOffset = xOffset;
+	public Sprite setXCenter(float xOffset) {
+		this.xCenter = xOffset;
 		return this;
 	}
 
-	public float getyOffset() {
-		return yOffset;
+	public float getYCenter() {
+		return yCenter;
 	}
 
-	public Sprite setyOffset(float yOffset) {
+	public Sprite setYCenter(float yOffset) {
+		this.yCenter = yOffset;
+		return this;
+	}
+	
+	public Sprite setCenter(float x, float y){
+		this.xCenter = x;
+		this.yCenter = y;
+		return this;
+	}
+	public Sprite setOffset(float x, float y){
+		this.xOffset = x;
+		this.yOffset = y;
+		return this;
+	}
+
+	public Sprite setXOffset(float xOffset) {
+		this.xOffset = xOffset;
+		return this;
+	}
+	
+	public Sprite setYOffset(float yOffset) {
 		this.yOffset = yOffset;
 		return this;
 	}
 
+	public float getXOffset() {
+		return xOffset;
+	}
+	
+	public float getYOffset() {
+		return yOffset;
+	}
+	
 	public Texture getTexture() {
 		return texture;
 	}

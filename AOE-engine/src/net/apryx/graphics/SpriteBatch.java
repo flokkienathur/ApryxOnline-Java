@@ -150,39 +150,37 @@ public class SpriteBatch {
 			flush();
 		}
 		
-		//TODO straight up sprites, and not this stuff and stuff idk really
-		
 		Texture t = sprite.getTexture();
 		texture(t);
 		
 		if(!sprite.isStraightUp()){
 			uv(t.getTexCoordX(), t.getTexCoordY());
-			vertex(x - sprite.getxOffset() * xscale,y  - sprite.getyOffset() * yscale, z);
+			vertex(x - sprite.getXCenter() * xscale + sprite.getXOffset() * xscale,y  - sprite.getYCenter() * yscale + sprite.getYOffset() * yscale, z);
 			uv(t.getTexCoordX2(), t.getTexCoordY());
-			vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y  - sprite.getyOffset() * yscale, z);
+			vertex(x - sprite.getXCenter() * xscale + sprite.getWidth() * xscale + sprite.getXOffset() * xscale,y  - sprite.getYCenter() * yscale + sprite.getYOffset() * yscale, z);
 			uv(t.getTexCoordX2(), t.getTexCoordY2());
-			vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale, z);
+			vertex(x - sprite.getXCenter() * xscale + sprite.getWidth() * xscale + sprite.getXOffset() * xscale,y  - sprite.getYCenter() * yscale + sprite.getHeight() * yscale + sprite.getYOffset() * yscale, z);
 
 			uv(t.getTexCoordX(), t.getTexCoordY());
-			vertex(x - sprite.getxOffset() * xscale,y  - sprite.getyOffset() * yscale, z);
+			vertex(x - sprite.getXCenter() * xscale + sprite.getXOffset() * xscale,y  - sprite.getYCenter() * yscale + sprite.getYOffset() * yscale, z);
 			uv(t.getTexCoordX2(), t.getTexCoordY2());
-			vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale, z);
+			vertex(x - sprite.getXCenter() * xscale + sprite.getWidth() * xscale + sprite.getXOffset() * xscale,y  - sprite.getYCenter() * yscale + sprite.getHeight() * yscale + sprite.getYOffset() * yscale, z);
 			uv(t.getTexCoordX(), t.getTexCoordY2());
-			vertex(x - sprite.getxOffset() * xscale,y  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale, z);
+			vertex(x - sprite.getXCenter() * xscale + sprite.getXOffset() * xscale,y  - sprite.getYCenter() * yscale + sprite.getHeight() * yscale + sprite.getYOffset() * yscale, z);
 		}else{
 			uv(t.getTexCoordX(), t.getTexCoordY());
-			vertex(x - sprite.getxOffset() * xscale,y, z  - sprite.getyOffset() * yscale);
+			vertex(x - sprite.getXCenter() * xscale + sprite.getXOffset() * xscale,y + sprite.getYOffset() * yscale, z  - sprite.getYCenter() * yscale);
 			uv(t.getTexCoordX2(), t.getTexCoordY());
-			vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y, z  - sprite.getyOffset() * yscale);
+			vertex(x - sprite.getXCenter() * xscale + sprite.getWidth() * xscale + sprite.getXOffset() * xscale,y + sprite.getYOffset() * yscale, z  - sprite.getYCenter() * yscale);
 			uv(t.getTexCoordX2(), t.getTexCoordY2());
-			vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y, z  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+			vertex(x - sprite.getXCenter() * xscale + sprite.getWidth() * xscale + sprite.getXOffset() * xscale,y + sprite.getYOffset() * yscale, z  - sprite.getYCenter() * yscale + sprite.getHeight() * yscale);
 
 			uv(t.getTexCoordX(), t.getTexCoordY());
-			vertex(x - sprite.getxOffset() * xscale,y, z  - sprite.getyOffset() * yscale);
+			vertex(x - sprite.getXCenter() * xscale + sprite.getXOffset() * xscale,y + sprite.getYOffset() * yscale, z  - sprite.getYCenter() * yscale);
 			uv(t.getTexCoordX2(), t.getTexCoordY2());
-			vertex(x - sprite.getxOffset() * xscale + sprite.getWidth() * xscale,y, z  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+			vertex(x - sprite.getXCenter() * xscale + sprite.getWidth() * xscale + sprite.getXOffset() * xscale,y + sprite.getYOffset() * yscale, z  - sprite.getYCenter() * yscale + sprite.getHeight() * yscale);
 			uv(t.getTexCoordX(), t.getTexCoordY2());
-			vertex(x - sprite.getxOffset() * xscale,y, z  - sprite.getyOffset() * yscale + sprite.getHeight() * yscale);
+			vertex(x - sprite.getXCenter() * xscale + sprite.getXOffset() * xscale,y + sprite.getYOffset() * yscale, z  - sprite.getYCenter() * yscale + sprite.getHeight() * yscale);
 		}
 		
 		

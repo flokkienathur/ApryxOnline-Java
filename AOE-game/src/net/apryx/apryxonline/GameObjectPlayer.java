@@ -1,5 +1,7 @@
 package net.apryx.apryxonline;
 
+import java.io.File;
+
 import net.apryx.apryxonline.spells.ApryxSpells;
 import net.apryx.apryxonline.spells.Spell;
 import net.apryx.apryxonline.spells.SpellKeyframe;
@@ -7,10 +9,10 @@ import net.apryx.apryxonline.tile.ApryxResources;
 import net.apryx.game.NetworkGameObject;
 import net.apryx.graphics.SpriteBatch;
 import net.apryx.graphics.texture.Sprite;
+import net.apryx.graphics.texture.TextureLoader;
 import net.apryx.input.Input;
 import net.apryx.input.Keys;
 import net.apryx.input.Mouse;
-import net.apryx.logger.Log;
 import net.apryx.network.aoe.BMessage;
 import net.apryx.time.Time;
 
@@ -26,12 +28,17 @@ public class GameObjectPlayer extends NetworkGameObject{
 	private float spellY = 0;
 	private float spellTime = 0;
 	
+	private Sprite[] sprites;
+	
 	public GameObjectPlayer(float x, float y){
 		super(x,y);
 		sprite = new Sprite(ApryxResources.player);
 		sprite.center();
-		sprite.setyOffset(sprite.getHeight());
+		sprite.setYCenter(sprite.getHeight());
 		sprite.setStraightUp(true);
+		
+		sprites = new Sprite[6];
+		(sprites[0] = new Sprite(TextureLoader.loadTexture(new File("texture/player/player_head.png")))).center().setYCenter(sprites[0].getHeight());
 	}
 	
 	@Override

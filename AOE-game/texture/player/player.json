@@ -1,0 +1,14 @@
+{
+  "name":"player",
+  "parts":[
+    {
+      "file":"player_head.png",
+      ""
+    },
+  ],
+  "constraints":[
+    {
+
+    },
+  ]
+}

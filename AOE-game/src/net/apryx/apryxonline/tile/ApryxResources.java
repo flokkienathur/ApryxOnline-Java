@@ -19,11 +19,21 @@ public class ApryxResources {
 		player = TextureLoader.loadTexture(new File("texture/player.png"));
 		tileSheet = TextureLoader.loadTexture(new File("texture/tilesheet.png"));
 		
-		tileSprites = new Sprite[]{
-			null,
-			new Sprite(new TextureRegion(tileSheet, 0,0,32,32)),
-			new Sprite(new TextureRegion(tileSheet, 32,0,32,32))
-		};
+		tileSprites = new Sprite[256];
+		tileSprites[1] = new Sprite(new TextureRegion(tileSheet, 0,0,32,32));
+		tileSprites[2] = new Sprite(new TextureRegion(tileSheet, 32,0,32,32)).setCenter(0,32).setOffset(0, 32).setStraightUp(true);
+		tileSprites[3] = new Sprite(new TextureRegion(tileSheet, 32,32,32,32));
+		
+		int index = 4;
+		for(int y = 0; y < 5; y++){
+			for(int x = 0; x < 3; x++){
+				//Create new tile, it registers itself :)
+				new DefaultTile(index);
+				tileSprites[index] = new Sprite(new TextureRegion(tileSheet, 64 + x * 32, y * 32, 32, 32));
+				
+				index++;
+			}
+		}
 	}
 	
 	public static void dispose(){

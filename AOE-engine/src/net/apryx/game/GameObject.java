@@ -36,16 +36,16 @@ public abstract class GameObject {
 	}
 	
 	public float getLeft(){
-		return x - sprite.getxOffset();
+		return x - sprite.getXCenter();
 	}
 	public float getRight(){
-		return x - sprite.getxOffset() + sprite.getWidth();
+		return x - sprite.getXCenter() + sprite.getWidth();
 	}
 	public float getTop(){
-		return y - sprite.getyOffset();
+		return y - sprite.getYCenter();
 	}
 	public float getBottom(){
-		return y - sprite.getyOffset() + sprite.getHeight();
+		return y - sprite.getYCenter() + sprite.getHeight();
 	}
 	
 	public int getLayer() {

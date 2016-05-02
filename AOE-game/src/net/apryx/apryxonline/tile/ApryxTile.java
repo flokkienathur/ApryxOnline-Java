@@ -9,6 +9,7 @@ public class ApryxTile extends Tile {
 	public static final Tile tileVoid = new VoidTile(0);
 	public static final Tile tileGrass = new DefaultTile(1);
 	public static final Tile tileStone = new DefaultTile(2);
+	public static final Tile tileStoneTop = new DefaultTile(3);
 	
 
 	
